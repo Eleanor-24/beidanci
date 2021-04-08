@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<home></home>
-		<u-tabbar v-model="current" :list="list" active-color="#FED136"></u-tabbar>
+		<u-tabbar v-model="current" :list="list" active-color="#FED136" @change="tabSwitch"></u-tabbar>
 	</view>
 	
 </template>
@@ -39,7 +39,22 @@
 
 		},
 		methods: {
-
+			tabSwitch(index){
+				console.log(index)
+				let url;
+				if(index==0){
+					url='/pages/index/index'
+				}
+				if(index==1){
+					url='/pages/index/notebook/notebook'
+				}
+				if(index==2){
+					url='/pages/index/training/training'
+				}
+				uni.navigateTo({
+					url:url
+				})
+			}
 		}
 	}
 </script>
