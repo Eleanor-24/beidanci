@@ -1,13 +1,23 @@
 <template>
 	<view>
-		<home></home>
-		<u-tabbar v-model="current" :list="list" active-color="#FED136" @change="tabSwitch"></u-tabbar>
+		<view v-if="current==0">
+			<home></home>
+		</view>
+		<view v-else-if="current==1">
+			<notebook></notebook>
+		</view>
+		<view v-else>
+			<training></training>
+		</view>
+		<u-tabbar v-model="current" :list="list" active-color="#FED136"></u-tabbar>
 	</view>
 	
 </template>
 
 <script>
 	import home from "@/pages/index/home/home.vue"
+	import notebook from '@/pages/index/notebook/notebook.vue'
+	import training from '@/pages/index/training/training.vue'
 	export default {
 		data() {
 			return {
@@ -29,31 +39,22 @@
 						
 					}
 				],
-				current: 0
+				current:0,
+				
 			}
 		},
 		components:{
-			home
+			home,
+			notebook,
+			training
 		},
 		onLoad() {
 
 		},
 		methods: {
 			tabSwitch(index){
-				console.log(index)
-				let url;
-				if(index==0){
-					url='/pages/index/index'
-				}
-				if(index==1){
-					url='/pages/index/notebook/notebook'
-				}
-				if(index==2){
-					url='/pages/index/training/training'
-				}
-				uni.navigateTo({
-					url:url
-				})
+				this.current=index
+				
 			}
 		}
 	}
