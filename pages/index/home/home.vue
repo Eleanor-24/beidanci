@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		
 		<view class="header">
 			<img src="@/static/logo.png" alt="" class="photo">
 			<view class="nickname">hey,阿白</view>
@@ -7,6 +8,7 @@
 			
 		</view>
 		<view class="card">
+			<view class="calendar"><u-icon name="calendar" color="#fff" size="40"></u-icon></view>
 			<view class="type">考研词汇</view>
 			<view class="today">
 				<view class="today_num">5</view>
@@ -58,6 +60,7 @@ page{
 		justify-content: space-around;
 		box-sizing: border-box;
 		
+		
 		.photo{
 			width: 84rpx;
 			height: 84rpx;
@@ -74,6 +77,7 @@ page{
 		}
 	}
 	.card{
+		position: relative;
 		height: 660rpx;
 		width: 624rpx;
 		padding: 0 40rpx;
@@ -85,6 +89,18 @@ page{
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+		.calendar{
+			height: 80rpx;
+			width: 80rpx;
+			border-radius: 50%;
+			background-color: #FED136;
+			position: absolute;
+			right: 40rpx;
+			top: 40rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 		.type,.text,.computed{
 			font-size: 32rpx;
 			color: #B2B3B5;

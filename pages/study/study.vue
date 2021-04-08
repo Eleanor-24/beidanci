@@ -1,5 +1,4 @@
 <template>
-
 		<view class="content">
 			<view class="card">
 				<view class="word">word</view>
