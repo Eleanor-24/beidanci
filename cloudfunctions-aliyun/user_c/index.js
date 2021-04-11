@@ -36,6 +36,16 @@ exports.main = async (event, context) => {
 			data:result
 		}
 	}
+	if(event.type=="updateStudied"){
+		let result=await db.collection('user_common').doc(event._id).update({
+			studied:event.studied
+		})
+		return {
+			code:"200",
+			msg:"更新成功",
+			data:result
+		}
+	}
 	
 
 };

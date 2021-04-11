@@ -5,7 +5,7 @@ let wordList=[
   'principal',
   'pendulum',
 
-  'consumption',
+  
   'reliable',
 
   'argument',
@@ -14,7 +14,7 @@ let wordList=[
   'score',
   'sham',
 
-  'rise',
+  
   'cable',
 
   'signal',

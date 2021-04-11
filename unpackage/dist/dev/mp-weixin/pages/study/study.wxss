@@ -63,11 +63,9 @@ page.data-v-7ca426cc {
 }
 .content .card .means.data-v-7ca426cc {
   width: 80%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+}
+.content .card .means .mean.data-v-7ca426cc {
+  display: inline;
 }
 .content .card .pronun.data-v-7ca426cc {
   display: -webkit-box;

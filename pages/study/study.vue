@@ -7,7 +7,7 @@
 					<view class="mask">/{{mask}}/</view>
 				</view>
 				<view class="means">
-					<view class="mean" v-for="(item,index) in means">{{item}}</view>
+					<view class="mean" v-for="(item,index) in means" v-if="index<3">{{item}}</view>
 				</view>
 				
 			</view>
@@ -18,9 +18,9 @@
 				</view>
 			</view>
 			<view class="btns">
-				<view class="btn" @click="clickNext(this.index-1)"><u-icon name="arrow-left" color="#fff" size="36" ></u-icon></view>
+				<view class="btn"><u-icon name="arrow-left" color="#fff" size="36" ></u-icon></view>
 				<view class="btn"><u-icon name="star" color="#fff" size="36"></u-icon></view>
-				<view class="btn"><u-icon name="arrow-right" color="#fff" size="36"></u-icon></view>
+				<view class="btn"  @click="clickNext()"><u-icon name="arrow-right" color="#fff" size="36"></u-icon></view>
 			</view>
 		</view>
 
@@ -37,13 +37,34 @@
 				means:[],
 				sentenceList:[],
 				voice:'',
-				index:0
+				endIndex:0,
+				startIndex:0
 				
 			}
 		},
-		onLoad(){
-			this.requestWordData(0)
+		onLoad(opt){
+			this.startIndex=opt.index
+			this.requestWordData(opt.index)
 			
+		},
+		beforeDestroy(){
+			// console.log(this.endIndex)
+			let studied=[];
+			for(let i=0;i<this.endIndex;i++){
+				studied.push(kaoyan.wordList[i])
+			}
+			console.log(getApp().globalData._id)
+			uniCloud.callFunction({
+				name:"user_c",
+				data:{
+					type:"updateStudied",
+					_id:getApp().globalData._id,
+					studied:studied
+				}
+				}).then(res=>{
+					console.log(res)
+					
+			})
 		},
 		methods: {
 			requestWordData(index){
@@ -62,11 +83,16 @@
 						})
 					}
 					this.sentenceList=sentenceList
-					this.index=index
+					// this.index=index
 				})
 			},
-			clickNext(index){
-				console.log(index)
+			clickNext(){
+				this.endIndex++;
+				
+				// console.log(this.index)
+				this.requestWordData(this.endIndex)
+				//将单词加入到已学
+				
 			}
 		}
 	}
@@ -97,8 +123,10 @@
 		}
 		.means{
 			width: 80%;
-			display: flex;
-			justify-content: space-around;
+			.mean{
+				display: inline;
+			}
+			// justify-content: space-around;
 		}
 		.pronun{
 			display: flex;

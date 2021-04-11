@@ -50,20 +50,31 @@
 		
 		methods: {
 			gotoStudy(){
-				uni.navigateTo({
-					url:'/pages/study/study'
-				})
+				console.log(this.studied)
+				if(getApp().globalData.status==1){
+					
+					uni.navigateTo({
+						url:'/pages/study/study?index='+this.studied
+					})
+				}else{
+					uni.showToast({
+						title:"请先登录",
+						icon:"none"
+					})
+				}
+				
 			},
 			
 			getUserInfo(){
-				this.disabled=true
+				
 				uni.getUserProfile({
 				    desc:'Wexin',     // 这个参数是必须的
 				    success:res=>{
+						this.disabled=true
 				        console.log(res)
 						this.nickName=res.userInfo.nickName
 						this.avatarUrl=res.userInfo.avatarUrl
-						
+						getApp().globalData.status=1//表示登陆状态
 						// console.log(openid)
 						this.getUserData(getApp().globalData.openid)
 				    },
@@ -86,7 +97,10 @@
 						this.userDataAdd(openid,this.nickName,this.avatarUrl)
 					}else{
 						this.days=res.result.data.data[0].days
+						console.log(res.result.data.data[0].studied.length)
 						this.studied=res.result.data.data[0].studied.length
+						console.log(this.studied)
+						getApp().globalData._id=res.result.data.data[0]._id//索引
 					}
 				})
 			},
