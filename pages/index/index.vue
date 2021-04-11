@@ -49,13 +49,15 @@
 			training
 		},
 		onLoad() {
-
+			
+			
 		},
 		methods: {
 			tabSwitch(index){
 				this.current=index
 				
-			}
+			},
+			
 		}
 	}
 </script>

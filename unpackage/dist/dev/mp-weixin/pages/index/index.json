@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "u-tabbar": "/node-modules/uview-ui/components/u-tabbar/u-tabbar",
+    "home": "/pages/index/home/home",
+    "notebook": "/pages/index/notebook/notebook",
+    "training": "/pages/index/training/training"
+  }
+}

@@ -9,7 +9,7 @@
 				<view class="mean">n.单词</view>
 			</view>
 			<view class="choices">
-				<view  v-for="(item,index) in choicesList" :key="index" class="choiceitem">
+				<view  v-for="(item,index) in choicesList" :key="index" class="choiceitem" @click="chooseItem(item)" :style="{'border-color':item.border}">
 					<view class="en">{{item.mean}}</view>
 				</view>
 			</view>
@@ -23,18 +23,29 @@
 		data() {
 			return {
 				choicesList:[{
-						mean:'n.单词'
+						mean:'n.单词',
+						border: "#e0e0e0"
+						
 					},{
-						mean:"n.发音"
+						mean:"n.发音",
+						border: "#e0e0e0"
+						
 					},{
-						mean:"n.世界"
+						mean:"n.世界",
+						border: "#e0e0e0"
+						
 					},{
-						mean:"adj.我的"
+						mean:"adj.我的",
+						border: "#e0e0e0"
+						
 				}]
 			}
 		},
 		methods: {
-			
+			chooseItem(item){
+				
+				this.$set(item,"border",'#FED136')
+			}
 		}
 	}
 </script>
@@ -77,7 +88,7 @@
 		.choiceitem{
 			height: 100rpx;
 			width: 80%;
-			border: 2rpx solid #e0e0e0;
+			border: 2rpx solid;
 			border-radius: 50rpx;
 			display: flex;
 			justify-content: center;

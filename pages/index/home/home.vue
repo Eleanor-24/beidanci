@@ -2,9 +2,11 @@
 	<view class="content">
 		
 		<view class="header">
-			<img src="@/static/logo.png" alt="" class="photo">
-			<view class="nickname">hey,阿白</view>
-			<view class="tip">今天是你学习的第2天，累计学习0个单词</view>
+			<button   @click="getUserInfo" class="avabtn" :disabled="disabled">
+				<img :src="avatarUrl" alt="" class="photo">
+			</button>
+			<view class="nickname">hey,{{nickName}}</view>
+			<view class="tip">今天是你学习的第{{days}}天，累计学习{{studied}}个单词</view>
 			
 		</view>
 		<view class="card">
@@ -24,19 +26,86 @@
 </template>
 
 <script>
+	// import user_c from '../../../common/user_c.js'
 	export default {
 		data() {
 			return {
-				
+				disabled:false,
+				userId:'',
+				avatarUrl:'https://himg.bdimg.com/sys/portraitn/item/29f8aeb3',
+				nickName:'游客',
+				date:'',
+				days:0,
+				studied:0,
+				like_list:[]
 			}
 		},
+		mounted(){
+			
+			// console.log(getApp().globalData.openid)
+			
+		},
+		
+			
+		
 		methods: {
 			gotoStudy(){
 				uni.navigateTo({
 					url:'/pages/study/study'
 				})
+			},
+			
+			getUserInfo(){
+				this.disabled=true
+				uni.getUserProfile({
+				    desc:'Wexin',     // 这个参数是必须的
+				    success:res=>{
+				        console.log(res)
+						this.nickName=res.userInfo.nickName
+						this.avatarUrl=res.userInfo.avatarUrl
+						
+						// console.log(openid)
+						this.getUserData(getApp().globalData.openid)
+				    },
+				    fail:err=>{
+				        console.log(err)
+				    }
+				})
+			},
+			getUserData(openid){
+				uniCloud.callFunction({
+					name:"user_c",
+					data:{
+						type:"getUserData",
+						openid:openid
+					}
+				}).then(res=>{
+					console.log(res)
+					if(res.result.msg=="查询失败"){
+						//添加到数据库
+						this.userDataAdd(openid,this.nickName,this.avatarUrl)
+					}else{
+						this.days=res.result.data.data[0].days
+						this.studied=res.result.data.data[0].studied.length
+					}
+				})
+			},
+			userDataAdd(openid,nickName,avatarUrl){
+				uniCloud.callFunction({
+					name:"user_c",
+					data:{
+						type:"addUserData",
+						openid:openid,
+						nickName:nickName,
+						avatarUrl:avatarUrl
+					}
+				}).then(res=>{
+					console.log(res)
+					
+				})
 			}
 		}
+		
 	}
 </script>
 
@@ -59,7 +128,15 @@ page{
 		padding: 0 25rpx;
 		justify-content: space-around;
 		box-sizing: border-box;
-		
+		.avabtn{
+			width: 84rpx;
+			height: 84rpx;
+			border: none;
+			border-radius: 50%;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+		}
 		
 		.photo{
 			width: 84rpx;

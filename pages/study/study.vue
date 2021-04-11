@@ -1,12 +1,15 @@
 <template>
 		<view class="content">
 			<view class="card">
-				<view class="word">word</view>
+				<view class="word">{{word}}</view>
 				<view class="pronun">
 					<u-icon name="volume-up-fill" size="28"></u-icon>
-					<view class="mask">/wo:d/</view>
+					<view class="mask">/{{mask}}/</view>
 				</view>
-				<view class="mean">n.单词</view>
+				<view class="means">
+					<view class="mean" v-for="(item,index) in means">{{item}}</view>
+				</view>
+				
 			</view>
 			<view class="sentences">
 				<view  v-for="(item,index) in sentenceList" :key="index">
@@ -15,7 +18,7 @@
 				</view>
 			</view>
 			<view class="btns">
-				<view class="btn"><u-icon name="arrow-left" color="#fff" size="36"></u-icon></view>
+				<view class="btn" @click="clickNext(this.index-1)"><u-icon name="arrow-left" color="#fff" size="36" ></u-icon></view>
 				<view class="btn"><u-icon name="star" color="#fff" size="36"></u-icon></view>
 				<view class="btn"><u-icon name="arrow-right" color="#fff" size="36"></u-icon></view>
 			</view>
@@ -24,23 +27,47 @@
 </template>
 
 <script>
+	import CryptoJS from 'crypto-js'
+	import kaoyan from '../../common/kaoyan.js'
 	export default {
 		data() {
 			return {
-				sentenceList:[{
-						en:"This is a word",
-						ch:"这是个单词"
-					},{
-						en:"This is a word",
-						ch:"这是个单词"
-					},{
-						en:"This is a word",
-						ch:"这是个单词"
-					}]
+				word:'',
+				mask:'',
+				means:[],
+				sentenceList:[],
+				voice:'',
+				index:0
+				
 			}
 		},
-		methods: {
+		onLoad(){
+			this.requestWordData(0)
 			
+		},
+		methods: {
+			requestWordData(index){
+				let wordList=kaoyan.wordList
+				this.word=wordList[index];
+				this.$request(wordList[index]).then(res=>{
+					console.log(res)
+					this.mask=res.basic.phonetic
+					this.means=res.basic.explains
+					this.voice=res.speakUrl
+					let sentenceList=[];
+					for(let i=0;i<res.web.length;i++){
+						sentenceList.push({
+							en:res.web[i].key,
+							ch:res.web[i].value[0]
+						})
+					}
+					this.sentenceList=sentenceList
+					this.index=index
+				})
+			},
+			clickNext(index){
+				console.log(index)
+			}
 		}
 	}
 </script>
@@ -68,16 +95,24 @@
 			font-size: 64rpx;
 			font-weight: 700;
 		}
+		.means{
+			width: 80%;
+			display: flex;
+			justify-content: space-around;
+		}
 		.pronun{
 			display: flex;
 		}
 	}
 	.sentences{
-		flex: 1;
+		width: 100%;
+		height: 700rpx;
+		margin-top: 40rpx;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
 		padding: 40rpx;
+		box-sizing: border-box;
 	}
 	.btns{
 		display: flex;
