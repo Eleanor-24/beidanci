@@ -77,6 +77,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  uEmpty: function() {
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 313))
+  },
   uIcon: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 282))
   }
@@ -118,7 +121,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
 //
 //
 //
@@ -136,24 +142,42 @@ var _default =
 {
   data: function data() {
     return {
-      noteList: [
-      {
-        word: 'word',
-        mean: 'n.单词' },
-
-      {
-        word: 'word',
-        mean: 'n.单词' },
-
-      {
-        word: 'word',
-        mean: 'n.单词' }] };
-
-
+      status: 1,
+      noteList: [],
+      text: "" };
 
   },
+  mounted: function mounted() {var _this = this;
+    if (uni.getStorageSync("status") == 1) {
+      uniCloud.callFunction({
+        name: "user_action",
+        data: {
+          type: "searchLikelist",
+          openid: uni.getStorageSync("openid") } }).
 
-  methods: {} };exports.default = _default;
+      then(function (res) {
+        console.log(res);
+        if (res.result.data.data.length == 0) {
+          _this.status = 0;
+        } else {
+          _this.noteList = res.result.data.data;
+          _this.text = "列表为空";
+        }
+
+      });
+    } else {
+      this.status = 0;
+      this.text = "列表为空,请先登录";
+    }
+
+  },
+  methods: {
+    jumpToDetail: function jumpToDetail(word_id) {
+      uni.navigateTo({
+        url: "/pages/study/study?index=" + word_id + "&from=notebook" });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 243)["default"]))
 
 /***/ }),
 

@@ -17,9 +17,9 @@
 					<view class="ch">{{item.ch}}</view>
 				</view>
 			</view>
-			<view class="btns">
-				<view class="btn"><u-icon name="arrow-left" color="#fff" size="36" ></u-icon></view>
-				<view class="btn"><u-icon name="star" color="#fff" size="36"></u-icon></view>
+			<view class="btns" v-if="isShow">
+				<view class="btn" @click="clickLast()"><u-icon name="arrow-left" color="#fff" size="36" ></u-icon></view>
+				<view class="btn" @click="addToLikelist()"><u-icon name="plus" color="#fff" size="36"></u-icon></view>
 				<view class="btn"  @click="clickNext()"><u-icon name="arrow-right" color="#fff" size="36"></u-icon></view>
 			</view>
 		</view>
@@ -37,20 +37,26 @@
 				means:[],
 				sentenceList:[],
 				voice:'',
-				endIndex:0,
-				startIndex:0
+				index:0,
+				maxIndex:0,
+				isShow:true
 				
 			}
 		},
 		onLoad(opt){
-			this.startIndex=opt.index
+			console.log(opt.from)
+			if(opt.from=="notebook"){
+				this.isShow=false
+			}
+			this.index=opt.index
+			this.maxIndex=opt.index
 			this.requestWordData(opt.index)
 			
 		},
 		beforeDestroy(){
-			// console.log(this.endIndex)
+			console.log(this.maxIndex)
 			let studied=[];
-			for(let i=0;i<this.endIndex;i++){
+			for(let i=0;i<this.maxIndex;i++){
 				studied.push(kaoyan.wordList[i])
 			}
 			console.log(getApp().globalData._id)
@@ -65,6 +71,7 @@
 					console.log(res)
 					
 			})
+			
 		},
 		methods: {
 			requestWordData(index){
@@ -87,11 +94,48 @@
 				})
 			},
 			clickNext(){
-				this.endIndex++;
-				
+				this.index++;
+				if(this.index>this.maxIndex){
+					this.maxIndex=this.index
+				}
 				// console.log(this.index)
-				this.requestWordData(this.endIndex)
-				//将单词加入到已学
+				this.requestWordData(this.index)
+				
+			},
+			clickLast(){
+				this.index--;
+				if(this.index==0){
+					uni.showToast({
+						title:"已经是第一个单词",
+						icon:"none"
+					})
+				}
+				this.requestWordData(this.index)
+			},
+			addToLikelist(){
+				uniCloud.callFunction({
+					name:"user_action",
+					data:{
+						type:"addLikelist",
+						word_id:this.index,
+						openid:uni.getStorageSync("openid"),
+						word:this.word,
+						mean:this.means[0]
+					}
+					}).then(res=>{
+						console.log(res)
+						uni.showToast({
+							title:"添加到单词本",
+							icon:"success"
+						})
+						
+				}).catch(err=>{
+					console.log(err)
+					uni.showToast({
+						title:"单词已在单词本中",
+						icon:"none"
+					})
+				})
 				
 			}
 		}

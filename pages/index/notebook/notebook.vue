@@ -1,7 +1,10 @@
 <template>
 	<view class="content">
-		<view class="notelist">
-			<view v-for="(item,index) in noteList" :key="index" class="noteitem">
+		<view v-if="status==0">
+			<u-empty :text="text" mode="list" margin-top="200"></u-empty>
+		</view>
+		<view v-else class="notelist" >
+			<view v-for="(item,index) in noteList" :key="index" class="noteitem" @click="jumpToDetail(item.word_id)">
 				<u-icon name="trash" color="#fa3534" size="28"></u-icon>
 				<view class="word">{{item.word}}</view>
 				<view class="mean">{{item.mean}}</view>
@@ -16,25 +19,41 @@
 	export default {
 		data() {
 			return {
-				noteList:[
-					{
-						word:'word',
-						mean:'n.单词'
-					},
-					{
-						word:'word',
-						mean:'n.单词'
-					},
-					{
-						word:'word',
-						mean:'n.单词'
-					}
-				]
+				status:1,
+				noteList:[],
+				text:""
 			}
 		},
-		
-		methods: {
+		mounted(){
+			if(uni.getStorageSync("status")==1){
+				uniCloud.callFunction({
+					name:"user_action",
+					data:{
+						type:"searchLikelist",
+						openid:uni.getStorageSync("openid")
+					}
+				}).then(res=>{
+					console.log(res)
+					if(res.result.data.data.length==0){
+						this.status=0
+					}else{
+						this.noteList=res.result.data.data
+						this.text="列表为空"
+					}
+					
+				})
+			}else{
+				this.status=0
+				this.text="列表为空,请先登录"
+			}
 			
+		},
+		methods: {
+			jumpToDetail(word_id){
+				uni.navigateTo({
+					url:"/pages/study/study?index="+word_id+"&from=notebook"
+				})
+			}
 		}
 	}
 </script>

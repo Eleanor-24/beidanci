@@ -164,8 +164,11 @@ var _default = {
 
   },
   mounted: function mounted() {
-
-    // console.log(getApp().globalData.openid)
+    if (uni.getStorageSync("status") == 1) {
+      this.nickName = uni.getStorageSync("nickname");
+      this.avatarUrl = uni.getStorageSync("avatarUrl");
+      this.getUserData(uni.getStorageSync("openid"));
+    }
 
   },
 
@@ -174,9 +177,9 @@ var _default = {
   methods: {
     gotoStudy: function gotoStudy() {
       console.log(this.studied);
-      if (getApp().globalData.status == 1) {
+      if (uni.getStorageSync("status") == 1) {
 
-        uni.navigateTo({
+        uni.redirectTo({
           url: '/pages/study/study?index=' + this.studied });
 
       } else {
@@ -197,9 +200,11 @@ var _default = {
           console.log(res);
           _this.nickName = res.userInfo.nickName;
           _this.avatarUrl = res.userInfo.avatarUrl;
-          getApp().globalData.status = 1; //表示登陆状态
+          uni.setStorageSync("nickname", _this.nickName);
+          uni.setStorageSync("avatarUrl", _this.avatarUrl);
+          uni.setStorageSync("status", 1); //登录状态
           // console.log(openid)
-          _this.getUserData(getApp().globalData.openid);
+          _this.getUserData(uni.getStorageSync("openid"));
         },
         fail: function fail(err) {
           console.log(err);

@@ -360,8 +360,11 @@ var _default = {
 
   },
   mounted: function mounted() {
-
-    // console.log(getApp().globalData.openid)
+    if (uni.getStorageSync("status") == 1) {
+      this.nickName = uni.getStorageSync("nickname");
+      this.avatarUrl = uni.getStorageSync("avatarUrl");
+      this.getUserData(uni.getStorageSync("openid"));
+    }
 
   },
 
@@ -370,9 +373,9 @@ var _default = {
   methods: {
     gotoStudy: function gotoStudy() {
       console.log(this.studied);
-      if (getApp().globalData.status == 1) {
+      if (uni.getStorageSync("status") == 1) {
 
-        uni.navigateTo({
+        uni.redirectTo({
           url: '/pages/study/study?index=' + this.studied });
 
       } else {
@@ -393,9 +396,11 @@ var _default = {
           console.log(res);
           _this.nickName = res.userInfo.nickName;
           _this.avatarUrl = res.userInfo.avatarUrl;
-          getApp().globalData.status = 1; //表示登陆状态
+          uni.setStorageSync("nickname", _this.nickName);
+          uni.setStorageSync("avatarUrl", _this.avatarUrl);
+          uni.setStorageSync("status", 1); //登录状态
           // console.log(openid)
-          _this.getUserData(getApp().globalData.openid);
+          _this.getUserData(uni.getStorageSync("openid"));
         },
         fail: function fail(err) {
           console.log(err);
@@ -547,6 +552,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  uEmpty: function() {
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 313))
+  },
   uIcon: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 282))
   }
@@ -588,7 +596,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
 //
 //
 //
@@ -606,24 +617,42 @@ var _default =
 {
   data: function data() {
     return {
-      noteList: [
-      {
-        word: 'word',
-        mean: 'n.单词' },
-
-      {
-        word: 'word',
-        mean: 'n.单词' },
-
-      {
-        word: 'word',
-        mean: 'n.单词' }] };
-
-
+      status: 1,
+      noteList: [],
+      text: "" };
 
   },
+  mounted: function mounted() {var _this = this;
+    if (uni.getStorageSync("status") == 1) {
+      uniCloud.callFunction({
+        name: "user_action",
+        data: {
+          type: "searchLikelist",
+          openid: uni.getStorageSync("openid") } }).
 
-  methods: {} };exports.default = _default;
+      then(function (res) {
+        console.log(res);
+        if (res.result.data.data.length == 0) {
+          _this.status = 0;
+        } else {
+          _this.noteList = res.result.data.data;
+          _this.text = "列表为空";
+        }
+
+      });
+    } else {
+      this.status = 0;
+      this.text = "列表为空,请先登录";
+    }
+
+  },
+  methods: {
+    jumpToDetail: function jumpToDetail(word_id) {
+      uni.navigateTo({
+        url: "/pages/study/study?index=" + word_id + "&from=notebook" });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 243)["default"]))
 
 /***/ }),
 

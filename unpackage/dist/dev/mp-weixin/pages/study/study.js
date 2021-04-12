@@ -134,7 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -192,8 +192,14 @@ var _kaoyan = _interopRequireDefault(__webpack_require__(/*! ../../common/kaoyan
 //
 //
 //
-var _default = { data: function data() {return { word: '', mask: '', means: [], sentenceList: [], voice: '', endIndex: 0, startIndex: 0 };}, onLoad: function onLoad(opt) {this.startIndex = opt.index;this.requestWordData(opt.index);}, beforeDestroy: function beforeDestroy() {// console.log(this.endIndex)
-    var studied = [];for (var i = 0; i < this.endIndex; i++) {studied.push(_kaoyan.default.wordList[i]);}console.log(getApp().globalData._id);uniCloud.callFunction({ name: "user_c", data: { type: "updateStudied",
+var _default = { data: function data() {return { word: '', mask: '', means: [], sentenceList: [], voice: '', index: 0, maxIndex: 0, isShow: true };}, onLoad: function onLoad(opt) {console.log(opt.from);if (opt.from == "notebook") {this.isShow = false;}this.index = opt.index;this.maxIndex = opt.index;this.requestWordData(opt.index);}, beforeDestroy: function beforeDestroy() {console.log(this.maxIndex);var studied = [];for (var i = 0; i < this.maxIndex; i++) {
+      studied.push(_kaoyan.default.wordList[i]);
+    }
+    console.log(getApp().globalData._id);
+    uniCloud.callFunction({
+      name: "user_c",
+      data: {
+        type: "updateStudied",
         _id: getApp().globalData._id,
         studied: studied } }).
 
@@ -201,6 +207,7 @@ var _default = { data: function data() {return { word: '', mask: '', means: [], 
       console.log(res);
 
     });
+
   },
   methods: {
     requestWordData: function requestWordData(index) {var _this = this;
@@ -223,14 +230,51 @@ var _default = { data: function data() {return { word: '', mask: '', means: [], 
       });
     },
     clickNext: function clickNext() {
-      this.endIndex++;
-
+      this.index++;
+      if (this.index > this.maxIndex) {
+        this.maxIndex = this.index;
+      }
       // console.log(this.index)
-      this.requestWordData(this.endIndex);
-      //将单词加入到已学
+      this.requestWordData(this.index);
+
+    },
+    clickLast: function clickLast() {
+      this.index--;
+      if (this.index == 0) {
+        uni.showToast({
+          title: "已经是第一个单词",
+          icon: "none" });
+
+      }
+      this.requestWordData(this.index);
+    },
+    addToLikelist: function addToLikelist() {
+      uniCloud.callFunction({
+        name: "user_action",
+        data: {
+          type: "addLikelist",
+          word_id: this.index,
+          openid: uni.getStorageSync("openid"),
+          word: this.word,
+          mean: this.means[0] } }).
+
+      then(function (res) {
+        console.log(res);
+        uni.showToast({
+          title: "添加到单词本",
+          icon: "success" });
+
+
+      }).catch(function (err) {
+        console.log(err);
+        uni.showToast({
+          title: "单词已在单词本中",
+          icon: "none" });
+
+      });
 
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 243)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 243)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

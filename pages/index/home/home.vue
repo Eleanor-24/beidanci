@@ -41,8 +41,11 @@
 			}
 		},
 		mounted(){
-			
-			// console.log(getApp().globalData.openid)
+			if(uni.getStorageSync("status")==1){
+				this.nickName=uni.getStorageSync("nickname")
+				this.avatarUrl=uni.getStorageSync("avatarUrl")
+				this.getUserData(uni.getStorageSync("openid"))
+			}
 			
 		},
 		
@@ -51,9 +54,9 @@
 		methods: {
 			gotoStudy(){
 				console.log(this.studied)
-				if(getApp().globalData.status==1){
+				if(uni.getStorageSync("status")==1){
 					
-					uni.navigateTo({
+					uni.redirectTo({
 						url:'/pages/study/study?index='+this.studied
 					})
 				}else{
@@ -74,9 +77,11 @@
 				        console.log(res)
 						this.nickName=res.userInfo.nickName
 						this.avatarUrl=res.userInfo.avatarUrl
-						getApp().globalData.status=1//表示登陆状态
+						uni.setStorageSync("nickname",this.nickName)
+						uni.setStorageSync("avatarUrl",this.avatarUrl)
+						uni.setStorageSync("status",1)//登录状态
 						// console.log(openid)
-						this.getUserData(getApp().globalData.openid)
+						this.getUserData(uni.getStorageSync("openid"))
 				    },
 				    fail:err=>{
 				        console.log(err)
