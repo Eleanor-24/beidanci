@@ -78,7 +78,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uEmpty: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 313))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 296))
+  },
+  uModal: function() {
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 321))
   },
   uIcon: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 282))
@@ -138,17 +141,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {
       status: 1,
       noteList: [],
-      text: "" };
+      text: "",
+      show: false };
 
   },
-  mounted: function mounted() {var _this = this;
+  mounted: function mounted() {
     if (uni.getStorageSync("status") == 1) {
+      this.getLikeList();
+    } else {
+      this.status = 0;
+      this.text = "列表为空,请先登录";
+    }
+
+  },
+  methods: {
+    getLikeList: function getLikeList() {var _this = this;
       uniCloud.callFunction({
         name: "user_action",
         data: {
@@ -157,6 +172,7 @@ var _default =
 
       then(function (res) {
         console.log(res);
+
         if (res.result.data.data.length == 0) {
           _this.status = 0;
         } else {
@@ -165,13 +181,26 @@ var _default =
         }
 
       });
-    } else {
-      this.status = 0;
-      this.text = "列表为空,请先登录";
-    }
+    },
+    removeNoteList: function removeNoteList() {
+      this.show = true;
+    },
+    confirmRemove: function confirmRemove(_id) {var _this2 = this;
+      console.log(_id);
+      uniCloud.callFunction({
+        name: 'user_action',
+        data: {
+          type: "removeLikeList",
+          _id: _id } }).
 
-  },
-  methods: {
+      then(function (res) {
+        console.log(res);
+        _this2.getLikeList();
+
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     jumpToDetail: function jumpToDetail(word_id) {
       uni.navigateTo({
         url: "/pages/study/study?index=" + word_id + "&from=notebook" });

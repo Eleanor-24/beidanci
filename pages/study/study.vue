@@ -2,12 +2,12 @@
 		<view class="content">
 			<view class="card">
 				<view class="word">{{word}}</view>
-				<view class="pronun">
+				<view class="pronun" @click="playAudio">
 					<u-icon name="volume-up-fill" size="28"></u-icon>
 					<view class="mask">/{{mask}}/</view>
 				</view>
 				<view class="means">
-					<view class="mean" v-for="(item,index) in means" v-if="index<3">{{item}}</view>
+					{{means}}
 				</view>
 				
 			</view>
@@ -74,13 +74,20 @@
 			
 		},
 		methods: {
+			playAudio(){
+				console.log(this.voice)
+				const Audio = uni.createInnerAudioContext();
+				Audio.autoplay = true;
+				Audio.src = "http://dict.youdao.com/dictvoice?audio="+this.word; //音频地址  
+				Audio.play(); //执行播放  
+			},
 			requestWordData(index){
 				let wordList=kaoyan.wordList
 				this.word=wordList[index];
 				this.$request(wordList[index]).then(res=>{
 					console.log(res)
 					this.mask=res.basic.phonetic
-					this.means=res.basic.explains
+					this.means=res.basic.explains[0]
 					this.voice=res.speakUrl
 					let sentenceList=[];
 					for(let i=0;i<res.web.length;i++){
@@ -90,7 +97,6 @@
 						})
 					}
 					this.sentenceList=sentenceList
-					// this.index=index
 				})
 			},
 			clickNext(){
@@ -120,7 +126,7 @@
 						word_id:this.index,
 						openid:uni.getStorageSync("openid"),
 						word:this.word,
-						mean:this.means[0]
+						mean:this.means.substring(0,this.means.indexOf("；"))
 					}
 					}).then(res=>{
 						console.log(res)
@@ -143,67 +149,67 @@
 </script>
 
 <style lang="scss" scoped>
-	page{
-		height: 100%;
-	}
-.content{
-	width: 100%;
+page{
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	.card{
+	.content{
+		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
-		align-items: center;
-		width: 100%;
-		height: 300rpx;
-		padding-top: 20rpx;
-		box-sizing: border-box;
-		background-color: #FED136;
-		.word{
-			font-size: 64rpx;
-			font-weight: 700;
-		}
-		.means{
-			width: 80%;
-			.mean{
-				display: inline;
-			}
-			// justify-content: space-around;
-		}
-		.pronun{
+		.card{
 			display: flex;
-		}
-	}
-	.sentences{
-		width: 100%;
-		height: 700rpx;
-		margin-top: 40rpx;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		padding: 40rpx;
-		box-sizing: border-box;
-	}
-	.btns{
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		height: 100rpx;
-		width: 100%;
-		padding: 0 40rpx;
-		box-sizing: border-box;
-		.btn{
-			width: 80rpx;
-			height: 80rpx;
-			border-radius: 50%;
-			background-color: #FED136;
-			display: flex;
-			justify-content: center;
+			flex-direction: column;
+			justify-content: space-around;
 			align-items: center;
+			width: 100%;
+			height: 300rpx;
+			padding-top: 20rpx;
+			box-sizing: border-box;
+			background-color: #FED136;
+			.word{
+				font-size: 64rpx;
+				font-weight: 700;
+			}
+			.means{
+				width: 80%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.pronun{
+				display: flex;
+			}
 		}
+		.sentences{
+			width: 100%;
+			height: 700rpx;
+			margin-top: 40rpx;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			padding: 40rpx;
+			box-sizing: border-box;
+		}
+		.btns{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 100rpx;
+			width: 100%;
+			padding: 0 40rpx;
+			box-sizing: border-box;
+			.btn{
+				width: 80rpx;
+				height: 80rpx;
+				border-radius: 50%;
+				background-color: #FED136;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+		
 	}
-	
 }
+
 </style>

@@ -24,6 +24,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+page {
+  height: 100%;
+  width: 100%;
+}
 /* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 .u-relative,
 .u-rela {

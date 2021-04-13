@@ -24,6 +24,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+page.data-v-3426a5b2 {
+  height: 100%;
+  width: 100%;
+}
 .u-fixed-placeholder.data-v-3426a5b2 {
   box-sizing: content-box;
 }

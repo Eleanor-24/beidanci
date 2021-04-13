@@ -716,6 +716,10 @@
 .uicon-share-fill.data-v-172979f2:before {
 	content: "\e65e";
 }
+page.data-v-172979f2 {
+  height: 100%;
+  width: 100%;
+}
 .u-icon.data-v-172979f2 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;

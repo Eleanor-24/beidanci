@@ -36,6 +36,10 @@
             }
             
         }
+        ,{
+            "path" : "pages/index/review/review",
+            "style" : {}
+        }
     ],
 	
 	"globalStyle": {

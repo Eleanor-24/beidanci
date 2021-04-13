@@ -26,8 +26,12 @@
 /* 文章场景相关 */
 page.data-v-7ca426cc {
   height: 100%;
+  width: 100%;
 }
-.content.data-v-7ca426cc {
+page.data-v-7ca426cc {
+  height: 100%;
+}
+page .content.data-v-7ca426cc {
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -38,7 +42,7 @@ page.data-v-7ca426cc {
   -webkit-flex-direction: column;
           flex-direction: column;
 }
-.content .card.data-v-7ca426cc {
+page .content .card.data-v-7ca426cc {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -57,22 +61,28 @@ page.data-v-7ca426cc {
   box-sizing: border-box;
   background-color: #FED136;
 }
-.content .card .word.data-v-7ca426cc {
+page .content .card .word.data-v-7ca426cc {
   font-size: 64rpx;
   font-weight: 700;
 }
-.content .card .means.data-v-7ca426cc {
+page .content .card .means.data-v-7ca426cc {
   width: 80%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
-.content .card .means .mean.data-v-7ca426cc {
-  display: inline;
-}
-.content .card .pronun.data-v-7ca426cc {
+page .content .card .pronun.data-v-7ca426cc {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
 }
-.content .sentences.data-v-7ca426cc {
+page .content .sentences.data-v-7ca426cc {
   width: 100%;
   height: 700rpx;
   margin-top: 40rpx;
@@ -88,7 +98,7 @@ page.data-v-7ca426cc {
   padding: 40rpx;
   box-sizing: border-box;
 }
-.content .btns.data-v-7ca426cc {
+page .content .btns.data-v-7ca426cc {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -103,7 +113,7 @@ page.data-v-7ca426cc {
   padding: 0 40rpx;
   box-sizing: border-box;
 }
-.content .btns .btn.data-v-7ca426cc {
+page .content .btns .btn.data-v-7ca426cc {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;

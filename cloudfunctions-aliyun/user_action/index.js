@@ -24,4 +24,12 @@ exports.main = async (event, context) => {
 			data:result
 		}
 	}
+	if(event.type=="removeLikeList"){
+		let result=await db.collection('user_book').doc(event._id).remove()
+		return {
+			code:"200",
+			msg:"删除单词成功",
+			data:result
+		}
+	}
 };

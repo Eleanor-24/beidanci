@@ -1,6 +1,5 @@
 <template>
 	<view class="content">
-		
 		<view class="header">
 			<button   @click="getUserInfo" class="avabtn" :disabled="disabled">
 				<img :src="avatarUrl" alt="" class="photo">
@@ -138,6 +137,7 @@ page{
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	.header{
 		height: 268rpx;
 		width: 100%;

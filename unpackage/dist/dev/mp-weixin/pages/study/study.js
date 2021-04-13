@@ -210,13 +210,20 @@ var _default = { data: function data() {return { word: '', mask: '', means: [], 
 
   },
   methods: {
+    playAudio: function playAudio() {
+      console.log(this.voice);
+      var Audio = uni.createInnerAudioContext();
+      Audio.autoplay = true;
+      Audio.src = "http://dict.youdao.com/dictvoice?audio=" + this.word; //音频地址  
+      Audio.play(); //执行播放  
+    },
     requestWordData: function requestWordData(index) {var _this = this;
       var wordList = _kaoyan.default.wordList;
       this.word = wordList[index];
       this.$request(wordList[index]).then(function (res) {
         console.log(res);
         _this.mask = res.basic.phonetic;
-        _this.means = res.basic.explains;
+        _this.means = res.basic.explains[0];
         _this.voice = res.speakUrl;
         var sentenceList = [];
         for (var i = 0; i < res.web.length; i++) {
@@ -226,7 +233,6 @@ var _default = { data: function data() {return { word: '', mask: '', means: [], 
 
         }
         _this.sentenceList = sentenceList;
-        // this.index=index
       });
     },
     clickNext: function clickNext() {
@@ -256,7 +262,7 @@ var _default = { data: function data() {return { word: '', mask: '', means: [], 
           word_id: this.index,
           openid: uni.getStorageSync("openid"),
           word: this.word,
-          mean: this.means[0] } }).
+          mean: this.means.substring(0, this.means.indexOf("；")) } }).
 
       then(function (res) {
         console.log(res);
