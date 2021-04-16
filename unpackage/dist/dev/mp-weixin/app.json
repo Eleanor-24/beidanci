@@ -5,7 +5,8 @@
     "pages/study/study",
     "pages/index/notebook/notebook",
     "pages/index/training/training",
-    "pages/index/review/review"
+    "pages/index/review/review",
+    "pages/sign/sign"
   ],
   "subPackages": [],
   "window": {
@@ -14,5 +15,6 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap82.json"
 }

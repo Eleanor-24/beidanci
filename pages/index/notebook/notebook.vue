@@ -5,8 +5,8 @@
 		</view>
 		<view v-else class="notelist" >
 			<view v-for="(item,index) in noteList" :key="index" class="noteitem" @click="jumpToDetail(item.word_id)">
-				<u-modal v-model="show" content="是否移出该单词" show-cancel-button=true @confirm="confirmRemove(item._id)"></u-modal>
-				<view  @tap.stop="removeNoteList()"><u-icon name="trash" color="#fa3534" size="28"></u-icon></view>
+				
+				<view  @tap.stop="removeNoteList(item._id)"><u-icon name="trash" color="#fa3534" size="28"></u-icon></view>
 				<view class="word">{{item.word}}</view>
 				<view class="mean">{{item.mean}}</view>
 				<view style="flex: 1;display: flex;justify-content: flex-end;"><u-icon name="arrow-right" color="#82848" size="28" ></u-icon></view>
@@ -39,7 +39,7 @@
 		methods: {
 			getLikeList(){
 				uniCloud.callFunction({
-					name:"user_action",
+					name:"user_c",
 					data:{
 						type:"searchLikelist",
 						openid:uni.getStorageSync("openid")
@@ -56,25 +56,32 @@
 					
 				})
 			},
-			removeNoteList(){
+			removeNoteList(_id){
 				this.show=true
-			},
-			confirmRemove(_id){
 				console.log(_id)
-				uniCloud.callFunction({
-					name:'user_action',
-					data:{
-						type:"removeLikeList",
-						_id:_id
+				uni.showModal({
+					title:"提示",
+					content:"是否移除该单词",
+					success:(res)=>{
+						if(res.confirm){
+							uniCloud.callFunction({
+								name:'user_c',
+								data:{
+									type:"removeLikeList",
+									_id:_id
+								}
+							}).then(res=>{
+								console.log(res)
+								this.getLikeList()
+								
+							}).catch(err=>{
+								console.log(err)
+							})
+						}
 					}
-				}).then(res=>{
-					console.log(res)
-					this.getLikeList()
-					
-				}).catch(err=>{
-					console.log(err)
 				})
 			},
+			
 			jumpToDetail(word_id){
 				uni.navigateTo({
 					url:"/pages/study/study?index="+word_id+"&from=notebook"

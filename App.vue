@@ -24,6 +24,7 @@
 									uni.setStorageSync("openid",result.data.openid)
 									// getApp().globalData.openid = result.data.openid;
 									console.log("这是openID:"+result.data.openid)
+									getApp().globalData.disabled=false
 									
 								},
 							});

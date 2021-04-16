@@ -5,22 +5,29 @@
 				<img :src="avatarUrl" alt="" class="photo">
 			</button>
 			<view class="nickname">hey,{{nickName}}</view>
-			<view class="tip">今天是你学习的第{{days}}天，累计学习{{studied}}个单词</view>
+			<view class="tip">{{beatifulSetence}}</view>
 			
 		</view>
-		<view class="card">
-			<view class="calendar"><u-icon name="calendar" color="#fff" size="40"></u-icon></view>
-			<view class="type">考研词汇</view>
-			<view class="today">
-				<view class="today_num">5</view>
-				<view class="text">今日词汇</view>
+		<view v-if="isShow" class="card">
+	
+				<view class="calendar" @click="jumpToSign()"><u-icon name="calendar" color="#fff" size="40"></u-icon></view>
+					<view class="type" @click="reverse()">点击看看</view>
+					<view class="today">
+						<view class="today_num">{{studied}}</view>
+						<view class="text">累计学习单词</view>
+					</view>
+					<view class="pross">
+						<view class="computed">0/5个</view>
+						<u-line-progress active-color="#FED136" :percent="70"></u-line-progress>
+					</view>
+					<view class="button" @click="gotoStudy">开始学习</view>
+				
+				
 			</view>
-			<view class="pross">
-				<view class="computed">0/5个</view>
-				<u-line-progress active-color="#FED136" :percent="70"></u-line-progress>
+			<view v-else class="card" :style="{'background': 'url('+src+') no-repeat;background-size:cover;'}" @click="reverse()">
+				
 			</view>
-			<view class="button" @click="gotoStudy">开始学习</view>
-		</view>
+			
 	</view>
 </template>
 
@@ -34,16 +41,24 @@
 				avatarUrl:'https://himg.bdimg.com/sys/portraitn/item/29f8aeb3',
 				nickName:'游客',
 				date:'',
-				days:0,
 				studied:0,
-				like_list:[]
+				like_list:[],
+				beatifulSetence:'',
+				isShow:true,
+				src:'https://edu-wps.ks3-cn-beijing.ksyun.com/image/a356fcff007bd65048e48e92bd6795df.png'
 			}
 		},
+		
 		mounted(){
 			if(uni.getStorageSync("status")==1){
 				this.nickName=uni.getStorageSync("nickname")
 				this.avatarUrl=uni.getStorageSync("avatarUrl")
 				this.getUserData(uni.getStorageSync("openid"))
+				this.$btfRequest().then(res=>{
+					console.log(res)
+					this.beatifulSetence=res.newslist[0].content
+					this.src=res.newslist[0].imgurl
+				})
 			}
 			
 		},
@@ -51,13 +66,28 @@
 			
 		
 		methods: {
-			gotoStudy(){
-				console.log(this.studied)
+			jumpToSign(){
 				if(uni.getStorageSync("status")==1){
-					
-					uni.redirectTo({
-						url:'/pages/study/study?index='+this.studied
+					uni.navigateTo({
+						url:`/pages/sign/sign`
 					})
+					
+				}else{
+					uni.showToast({
+						title:"请先登录",
+						icon:"none"
+					})
+				}
+			},
+			reverse(){
+				this.isShow=!this.isShow
+			},
+			gotoStudy(){
+				if(uni.getStorageSync("status")==1){
+					uni.redirectTo({
+						url:`/pages/study/study?index=${this.studied}`
+					})
+					
 				}else{
 					uni.showToast({
 						title:"请先登录",
@@ -88,6 +118,7 @@
 				})
 			},
 			getUserData(openid){
+				
 				uniCloud.callFunction({
 					name:"user_c",
 					data:{
@@ -95,18 +126,27 @@
 						openid:openid
 					}
 				}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.result.msg=="查询失败"){
 						//添加到数据库
 						this.userDataAdd(openid,this.nickName,this.avatarUrl)
 					}else{
-						this.days=res.result.data.data[0].days
-						console.log(res.result.data.data[0].studied.length)
-						this.studied=res.result.data.data[0].studied.length
-						console.log(this.studied)
+						uniCloud.callFunction({
+							name:"user_c",
+							data:{
+								type:"searchStudiedLength",
+								openid:uni.getStorageSync("openid")
+							}
+						}).then(res=>{
+							console.log(res)
+							this.studied=res.result.data.total
+						})
+						// this.studied=res.result.data.data[0].studied.length
 						getApp().globalData._id=res.result.data.data[0]._id//索引
 					}
 				})
+				
+				
 			},
 			userDataAdd(openid,nickName,avatarUrl){
 				uniCloud.callFunction({
@@ -115,7 +155,7 @@
 						type:"addUserData",
 						openid:openid,
 						nickName:nickName,
-						avatarUrl:avatarUrl
+						avatarUrl:avatarUrl,
 					}
 				}).then(res=>{
 					console.log(res)

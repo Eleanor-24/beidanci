@@ -34,12 +34,15 @@
 			return {
 				word:'',
 				mask:'',
-				means:[],
+				means:'',
 				sentenceList:[],
 				voice:'',
 				index:0,
 				maxIndex:0,
-				isShow:true
+				isShow:true,
+				studied:[],
+				like_list:[],
+			
 				
 			}
 		},
@@ -53,26 +56,7 @@
 			this.requestWordData(opt.index)
 			
 		},
-		beforeDestroy(){
-			console.log(this.maxIndex)
-			let studied=[];
-			for(let i=0;i<this.maxIndex;i++){
-				studied.push(kaoyan.wordList[i])
-			}
-			console.log(getApp().globalData._id)
-			uniCloud.callFunction({
-				name:"user_c",
-				data:{
-					type:"updateStudied",
-					_id:getApp().globalData._id,
-					studied:studied
-				}
-				}).then(res=>{
-					console.log(res)
-					
-			})
-			
-		},
+		
 		methods: {
 			playAudio(){
 				console.log(this.voice)
@@ -97,20 +81,49 @@
 						})
 					}
 					this.sentenceList=sentenceList
+					let year =new Date().getFullYear()
+					let month=new Date().getMonth()+1
+					let day =new Date().getDate()
+					let date=year+'-'+month+'-'+day
+					this.date=date
+					
 				})
 			},
+			
 			clickNext(){
 				this.index++;
+				uniCloud.callFunction({
+					name:"user_c",
+					data:{
+						type:"updateStudied",
+						openid:uni.getStorageSync("openid"),
+						word_id:this.index-0,
+						word:this.word,
+						mean:this.means,
+						date:this.date
+						
+					}
+				}).then(res=>{
+					console.log(res)
+				}).catch(err=>{
+					console.log(err)
+				})
+				
 				if(this.index>this.maxIndex){
 					this.maxIndex=this.index
 				}
-				// console.log(this.index)
+				
+				
+				
 				this.requestWordData(this.index)
+				
+				
 				
 			},
 			clickLast(){
 				this.index--;
-				if(this.index==0){
+				if(this.index==-1){
+					this.index=0
 					uni.showToast({
 						title:"已经是第一个单词",
 						icon:"none"
@@ -119,33 +132,38 @@
 				this.requestWordData(this.index)
 			},
 			addToLikelist(){
-				uniCloud.callFunction({
-					name:"user_action",
-					data:{
-						type:"addLikelist",
-						word_id:this.index,
-						openid:uni.getStorageSync("openid"),
-						word:this.word,
-						mean:this.means.substring(0,this.means.indexOf("；"))
-					}
-					}).then(res=>{
-						console.log(res)
-						uni.showToast({
-							title:"添加到单词本",
-							icon:"success"
-						})
+					uniCloud.callFunction({
+						name:"user_c",
+						data:{
+							type:"addLikelist",
+							openid:uni.getStorageSync("openid"),
+							word_id:this.index,
+							word:this.word,
+							mean:this.means.substring(0,this.means.indexOf("；"))
+						}
+						}).then(res=>{
+							console.log(res)
+							if(res.result==null){
+								uni.showToast({
+									title:"单词已在单词本中",
+									icon:"none"
+								})
+							}else{
+								uni.showToast({
+									title:"添加到单词本",
+									icon:"success"
+								})
+							}
+							
 						
-				}).catch(err=>{
-					console.log(err)
-					uni.showToast({
-						title:"单词已在单词本中",
-						icon:"none"
-					})
-				})
+							
+						})
+					}
+				
+				
 				
 			}
 		}
-	}
 </script>
 
 <style lang="scss" scoped>

@@ -40,6 +40,10 @@
             "path" : "pages/index/review/review",
             "style" : {}
         }
+        ,{
+            "path" : "pages/sign/sign",
+            "style" : {}
+        }
     ],
 	
 	"globalStyle": {
