@@ -6,7 +6,9 @@
     "pages/index/notebook/notebook",
     "pages/index/training/training",
     "pages/index/review/review",
-    "pages/sign/sign"
+    "pages/sign/sign",
+    "pages/history/history",
+    "pages/index/welcome/welcome"
   ],
   "subPackages": [],
   "window": {
@@ -16,5 +18,5 @@
     "backgroundColor": "#F8F8F8"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap82.json"
+  "sitemapLocation": "sitemap61.json"
 }

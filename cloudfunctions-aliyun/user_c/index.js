@@ -44,6 +44,36 @@ exports.main = async (event, context) => {
 			data:result,
 		}
 	}
+	if(event.type=="searchStudied"){
+		let result=await db.collection('user_studied').where({
+			openid:event.openid,
+		}).orderBy('weight','desc').get()
+		let total = await db.collection('user_studied').where({
+			openid:event.openid
+		}).count()
+		if(event.index>=total.total){
+			return{
+				code:"200",
+				msg:"已经是最后一个",
+			}
+		}
+		else if(result.data){
+			return {
+				code:"200",
+				msg:"查询已学成功",
+				total:total.total,
+				data:result.data,
+				index:event.index
+			}
+		}
+		else{
+			return {
+				code:"200",
+				msg:"还没有学习",
+			}
+		}
+		
+	}
 	if(event.type=="updateStudied"){
 		let exist =await db.collection('user_studied').where({
 			openid:event.openid,
@@ -55,7 +85,8 @@ exports.main = async (event, context) => {
 				word_id:event.word_id,
 				word:event.word,
 				mean:event.mean,
-				date:event.date
+				date:event.date,
+				weight:0
 			})
 			
 			return {
@@ -64,6 +95,17 @@ exports.main = async (event, context) => {
 				data:result,
 				exist:exist
 			}
+		}
+		
+	}
+	if(event.type=='updateWeight'){
+		let result =await db.collection('user_studied').doc(event._id).update({
+			weight:event.weight
+		})
+		return {
+			code:"200",
+			msg:"更新权重成功",
+			data:result
 		}
 		
 	}
@@ -116,6 +158,7 @@ exports.main = async (event, context) => {
 				code:"200",
 				msg:"查询成功",
 				data:result,
+			
 			}
 		
 		
@@ -130,16 +173,69 @@ exports.main = async (event, context) => {
 			data:result,
 		} 
 	}
-	if(event.type=="addSign"){
-		let result =await db.collection('user_sign').add({
-			openid:event.openid,
-			selected:[event.selected]
-		})
+	// if(event.type=="addSign"){
+	// 	let result =await db.collection('user_sign').add({
+	// 		openid:event.openid,
+	// 		selected:[event.selected]
+	// 	})
+	// 	return {
+	// 		code:"200",
+	// 		msg:"添加成功",
+	// 		data:result,
+	// 	} 
+	// }
+	if(event.type=="searchTestKu"){
+		let result =await db.collection('testKu').get()
 		return {
 			code:"200",
-			msg:"添加成功",
+			msg:"题库返回成功",
 			data:result,
 		} 
+	}
+	
+	if(event.type=="saveScore"){
+		let res=await db.collection('user_score').where({
+			openid:event.openid
+		}).get()
+		if(res.data.length!=0){
+			let _id=res.data[0]._id
+			let result =await db.collection('user_score').doc(_id).update({
+				score:_.push({date:event.date,score:event.score})
+			})
+			return {
+				code:"200",
+				msg:"添加成绩成功",
+				data:result
+			} 
+		}else{
+			let result =await db.collection('user_score').add({
+				openid:event.openid,
+				score:[{date:event.date,score:event.score}]
+			})
+			return {
+				code:"200",
+				msg:"添加成绩成功",
+				data:result
+			} 
+		}
+		
+		
+	}
+	if(event.type=="getUserScore"){
+		let res=await db.collection('user_score').where({
+			openid:event.openid
+		}).limit(20)
+		.get()
+		let user=await db.collection('user_common').where({
+			openid:event.openid
+		}).get()
+		return {
+			code:"200",
+			msg:"添加成绩成功",
+			res:res,
+			user:user
+		} 
+		
 	}
 	
 

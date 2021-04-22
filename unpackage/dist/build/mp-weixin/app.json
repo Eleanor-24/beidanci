@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/home/home",
+    "pages/study/study",
+    "pages/index/notebook/notebook",
+    "pages/index/training/training",
+    "pages/index/review/review",
+    "pages/sign/sign",
+    "pages/history/history",
+    "pages/index/welcome/welcome"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

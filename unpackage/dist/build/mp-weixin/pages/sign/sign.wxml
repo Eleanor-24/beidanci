@@ -1,0 +1,1 @@
+<view class="data-v-e98de5a8"><button data-event-opts="{{[['tap',[['sign',['$event']]]]]}}" class="sign data-v-e98de5a8" bindtap="__e">打卡</button><block wx:if="{{length==0||selected.length!=0}}"><imt-calendar vue-id="0a9b32a0-1" selected="{{selected}}" color="#FED136" class="data-v-e98de5a8" bind:__l="__l"></imt-calendar></block></view>

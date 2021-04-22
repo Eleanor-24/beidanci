@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["node-modules/uview-ui/components/u-table/u-table"],{"96cc":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r={name:"u-table",props:{borderColor:{type:String,default:"#e4e7ed"},align:{type:String,default:"center"},padding:{type:String,default:"10rpx 6rpx"},fontSize:{type:[String,Number],default:28},color:{type:String,default:"#606266"},thStyle:{type:Object,default:function(){return{}}},bgColor:{type:String,default:"#ffffff"}},data:function(){return{}},computed:{tableStyle:function(){var t={};return t.borderLeft="solid 1px ".concat(this.borderColor),t.borderTop="solid 1px ".concat(this.borderColor),t.backgroundColor=this.bgColor,t}}};e.default=r},"9ea1":function(t,e,n){"use strict";n.r(e);var r=n("96cc"),o=n.n(r);for(var u in r)"default"!==u&&function(t){n.d(e,t,(function(){return r[t]}))}(u);e["default"]=o.a},bbf6:function(t,e,n){},d4c7:function(t,e,n){"use strict";var r;n.d(e,"b",(function(){return o})),n.d(e,"c",(function(){return u})),n.d(e,"a",(function(){return r}));var o=function(){var t=this,e=t.$createElement,n=(t._self._c,t.__get_style([t.tableStyle]));t.$mp.data=Object.assign({},{$root:{s0:n}})},u=[]},d84b:function(t,e,n){"use strict";var r=n("bbf6"),o=n.n(r);o.a},f70b:function(t,e,n){"use strict";n.r(e);var r=n("d4c7"),o=n("9ea1");for(var u in o)"default"!==u&&function(t){n.d(e,t,(function(){return o[t]}))}(u);n("d84b");var a,c=n("f0c5"),f=Object(c["a"])(o["default"],r["b"],r["c"],!1,null,"5aa350e1",null,!1,r["a"],a);e["default"]=f.exports}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'node-modules/uview-ui/components/u-table/u-table-create-component',
+    {
+        'node-modules/uview-ui/components/u-table/u-table-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('543d')['createComponent'](__webpack_require__("f70b"))
+        })
+    },
+    [['node-modules/uview-ui/components/u-table/u-table-create-component']]
+]);

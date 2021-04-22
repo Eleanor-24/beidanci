@@ -78,10 +78,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uEmpty: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 313))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-empty/u-empty */ "node-modules/uview-ui/components/u-empty/u-empty").then(__webpack_require__.bind(null, /*! uview-ui/components/u-empty/u-empty.vue */ 327))
   },
   uIcon: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 299))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 313))
   }
 }
 var render = function() {
@@ -155,7 +155,7 @@ var _default =
       this.getLikeList();
     } else {
       this.status = 0;
-      this.text = "列表为空,请先登录";
+      this.text = "请先登录";
     }
 
   },
@@ -243,7 +243,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 281:
+/***/ 288:
 /*!********************************************************************************!*\
   !*** F:/web前端/beidanci/main.js?{"page":"pages%2Findex%2Fnotebook%2Fnotebook"} ***!
   \********************************************************************************/
@@ -259,5 +259,5 @@ createPage(_notebook.default);
 
 /***/ })
 
-},[[281,"common/runtime","common/vendor"]]]);
+},[[288,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../../.sourcemap/mp-weixin/pages/index/notebook/notebook.js.map

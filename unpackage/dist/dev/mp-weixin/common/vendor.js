@@ -10486,12 +10486,12 @@ function request(query) {
   // 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
   var from = 'zh-CHS';
   var to = 'en';
-  var str1 = appKey + truncate(query) + salt + curtime + key;
+  var str1 = appKey + query + salt + curtime + key;
   var vocabId = '';
   var sign = _cryptoJs.default.SHA256(str1).toString(_cryptoJs.default.enc.Hex);
   return new Promise(function (resolve, reject) {
     uni.request({
-      url: 'http://openapi.youdao.com/api',
+      url: 'https://openapi.youdao.com/api',
       methods: 'post',
       header: { 'content-type': 'application/json' },
       type: 'json',
@@ -10518,12 +10518,6 @@ function request(query) {
 
   });
 
-}
-
-function truncate(q) {
-  var len = q.length;
-  if (len <= 20) return q;
-  return q.substring(0, 10) + len + q.substring(len - 10, len);
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -40612,7 +40606,7 @@ function randomFillSync (buf, offset, size) {
   var apiKey = 'b6edb18be77e49b25f2a35dae34dffd5';
   return new Promise(function (resolve, reject) {
     uni.request({
-      url: 'http://api.tianapi.com/txapi/everyday/index',
+      url: 'https://api.tianapi.com/txapi/everyday/index',
       methods: 'get',
       type: 'json',
 
@@ -40621,6 +40615,7 @@ function randomFillSync (buf, offset, size) {
 
       success: function success(res) {
         // uni.hideLoading()
+
 
         resolve(res.data);
       },
@@ -40682,25 +40677,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 257 */,
 /* 258 */,
 /* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */
+/* 260 */
 /*!******************************************!*\
   !*** F:/web前端/beidanci/common/kaoyan.js ***!
   \******************************************/

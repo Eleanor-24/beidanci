@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "imt-calendar": "/components/imt-calendar/imt-calendar"
+  }
+}

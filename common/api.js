@@ -8,12 +8,12 @@ export default function request(query){
 	// 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
 	var from = 'zh-CHS';
 	var to = 'en';
-	var str1 = appKey + truncate(query) + salt + curtime + key;
+	var str1 = appKey + query + salt + curtime + key;
 	var vocabId =  '';
 	var sign = CryptoJS.SHA256(str1).toString(CryptoJS.enc.Hex);
 	return new Promise((resolve,reject)=>{
 		uni.request({
-			 url: 'http://openapi.youdao.com/api',
+			 url: 'https://openapi.youdao.com/api',
 			 methods: 'post',
 			 header: {'content-type':'application/json'},
 			 type:'json',
@@ -42,8 +42,4 @@ export default function request(query){
 			
 }
 
-function truncate(q){
-	var len = q.length;
-	if(len<=20) return q;
-	return q.substring(0, 10) + len + q.substring(len-10, len);
-}
+

@@ -32,7 +32,7 @@
 				this.getLikeList()
 			}else{
 				this.status=0
-				this.text="列表为空,请先登录"
+				this.text="请先登录"
 			}
 			
 		},

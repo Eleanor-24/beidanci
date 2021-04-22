@@ -24,10 +24,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-10dbb326 {
-  height: 100%;
-  width: 100%;
-}
 .sign.data-v-10dbb326 {
   position: absolute;
   top: 20rpx;

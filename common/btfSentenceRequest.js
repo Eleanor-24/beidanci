@@ -2,7 +2,7 @@ export default function btfRequest(){
 	let apiKey='b6edb18be77e49b25f2a35dae34dffd5'
 	return new Promise((resolve,reject)=>{
 		uni.request({
-			 url: 'http://api.tianapi.com/txapi/everyday/index',
+			 url: 'https://api.tianapi.com/txapi/everyday/index',
 			 methods: 'get',
 			 type:'json',
 			 
@@ -11,6 +11,7 @@ export default function btfRequest(){
 			 },
 			 success(res){
 			 	// uni.hideLoading()
+				
 			 	
 			 	resolve(res.data)
 			 },

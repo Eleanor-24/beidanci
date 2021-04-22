@@ -24,10 +24,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-7775dba7 {
-  height: 100%;
-  width: 100%;
-}
 .u-mask.data-v-7775dba7 {
   position: fixed;
   top: 0;

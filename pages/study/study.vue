@@ -111,6 +111,7 @@
 				
 				if(this.index>this.maxIndex){
 					this.maxIndex=this.index
+					
 				}
 				
 				

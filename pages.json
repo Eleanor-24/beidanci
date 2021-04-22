@@ -44,6 +44,15 @@
             "path" : "pages/sign/sign",
             "style" : {}
         }
+        ,{
+            "path" : "pages/history/history",
+            "style" : {}
+        }
+        
+        ,{
+            "path" : "pages/index/welcome/welcome",
+            "style" : {}
+        }
     ],
 	
 	"globalStyle": {

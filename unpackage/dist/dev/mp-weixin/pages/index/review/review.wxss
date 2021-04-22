@@ -26,10 +26,6 @@
 /* 文章场景相关 */
 page.data-v-2c3bcb89 {
   height: 100%;
-  width: 100%;
-}
-page.data-v-2c3bcb89 {
-  height: 100%;
 }
 page .content.data-v-2c3bcb89 {
   width: 100%;
@@ -99,22 +95,25 @@ page .content .sentences.data-v-2c3bcb89 {
   box-sizing: border-box;
 }
 page .content .btns.data-v-2c3bcb89 {
-  width: 100%;
-  height: 100rpx;
   position: fixed;
-  bottom: 40rpx;
+  bottom: 100rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   -webkit-justify-content: space-around;
           justify-content: space-around;
+  height: 100rpx;
+  width: 100%;
+  padding: 0 40rpx;
+  box-sizing: border-box;
 }
 page .content .btns .btn.data-v-2c3bcb89 {
-  width: 200rpx;
-  height: 100rpx;
-  padding: 10rpx;
-  box-sizing: border-box;
-  border-radius: 50rpx;
+  width: 140rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
   background-color: #FED136;
   display: -webkit-box;
   display: -webkit-flex;

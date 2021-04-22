@@ -11,16 +11,17 @@
 		<view v-if="isShow" class="card">
 	
 				<view class="calendar" @click="jumpToSign()"><u-icon name="calendar" color="#fff" size="40"></u-icon></view>
-					<view class="type" @click="reverse()">点击看看</view>
-					<view class="today">
-						<view class="today_num">{{studied}}</view>
-						<view class="text">累计学习单词</view>
-					</view>
-					<view class="pross">
-						<view class="computed">0/5个</view>
-						<u-line-progress active-color="#FED136" :percent="70"></u-line-progress>
-					</view>
-					<view class="button" @click="gotoStudy">开始学习</view>
+				
+				<view class="type" @click="reverse()">点击看看</view>
+				<view class="today">
+					<view class="today_num">{{studied}}</view>
+					<view class="text">累计学习单词</view>
+				</view>
+				<view class="pross">
+					<view class="computed">{{studied}}/3538个</view>
+					<u-line-progress active-color="#FED136" :percent="studied/3538" :show-percent="false"></u-line-progress>
+				</view>
+				<view class="button" @click="gotoStudy">开始学习</view>
 				
 				
 			</view>

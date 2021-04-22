@@ -78,10 +78,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uIcon: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 299))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 313))
   },
   uLineProgress: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-line-progress/u-line-progress */ "node-modules/uview-ui/components/u-line-progress/u-line-progress").then(__webpack_require__.bind(null, /*! uview-ui/components/u-line-progress/u-line-progress.vue */ 306))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-line-progress/u-line-progress */ "node-modules/uview-ui/components/u-line-progress/u-line-progress").then(__webpack_require__.bind(null, /*! uview-ui/components/u-line-progress/u-line-progress.vue */ 320))
   }
 }
 var render = function() {
@@ -122,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
 //
 //
 //
@@ -318,7 +319,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 271:
+/***/ 279:
 /*!************************************************************************!*\
   !*** F:/web前端/beidanci/main.js?{"page":"pages%2Findex%2Fhome%2Fhome"} ***!
   \************************************************************************/
@@ -334,5 +335,5 @@ createPage(_home.default);
 
 /***/ })
 
-},[[271,"common/runtime","common/vendor"]]]);
+},[[279,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../../.sourcemap/mp-weixin/pages/index/home/home.js.map
